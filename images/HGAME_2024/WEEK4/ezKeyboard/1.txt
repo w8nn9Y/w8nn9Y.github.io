@@ -1,0 +1,15 @@
+hgame[k-<DEL>e<CAP><CAP><CAP><CAP>b0a1d<CAP><CAP><CAP>_<CAP><CAP>gam0<CAP><CAP><CAP><CAP>-<CAP><CAP>-<CAP>15<CAP><CAP><CAP><CAP><CAP>s0<CAP><CAP><CAP><CAP><CAP><CAP>1nst<DEL><DEL><DEL><DEL>f0n--11<GA><GA><CAP><GA><GA><CAP>]c
+
+hgame[keb0a1dGAM015S0F0N--11]
+
+hgame{k_<DEL>e<CAP><CAP><CAP><CAP>b0a1d<CAP><CAP><CAP><CAP><CAP>gam0<CAP><CAP><CAP><CAP><CAP><CAP><CAP>15<CAP><CAP><CAP><CAP><CAP>s0<CAP><CAP><CAP><CAP><CAP><CAP>1nst<DEL><DEL><DEL><DEL>f0n__!!<GA><GA><CAP><GA><GA><CAP>}
+
+hgame(keb0a1dGAM015s0f0n__!!``~~}
+
+hgame(keyb0a1d-GAM0--15-S0-F0N__!!~~~~}
+
+hgame{k_<DEL>e<CAP><CAP>y<CAP><CAP>b0a1d<CAP><CAP><CAP>_<CAP><CAP>gam0<CAP><CAP><CAP>_<CAP><CAP>_<CAP><CAP>15<CAP><CAP><CAP>_<CAP><CAP>s0<CAP><CAP><CAP>_<CAP><CAP><CAP>1nst<DEL><DEL><DEL><DEL>f0n__!!~~<CAP>~~<CAP>}
+
+hgame{keyb0a1d_GAM0__15_S0_F0N__!!~~~~}
+HGAME{KEYB0A1D_gam0__15_s0_f0n__!!~~~~}
+hgame{keyb0a1d_gam0__15_s0_f0n__!!~~~~}
